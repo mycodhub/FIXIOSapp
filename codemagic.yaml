@@ -7,9 +7,12 @@ workflows:
     steps:
       - checkout
       - run:
-          name: Build and Export IPA
+          name: Build app
           command: |
             xcodebuild -workspace HelloWorldApp.xcworkspace -scheme HelloWorldApp -sdk iphoneos -configuration Release archive -archivePath $PWD/build/HelloWorldApp.xcarchive
+      - run:
+          name: Export IPA
+          command: |
             xcodebuild -exportArchive -archivePath $PWD/build/HelloWorldApp.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build
     artifacts:
       - build/*.ipa
