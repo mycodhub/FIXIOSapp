@@ -10,3 +10,6 @@ workflows:
       - name: Build and test
         script: |
           xcodebuild -workspace YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11' build test
+          artifacts:
+  - build/*.ipa
+
