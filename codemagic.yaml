@@ -1,0 +1,33 @@
+workflows:
+  ios:
+    name: iOS Workflow
+    max_build_duration: 60 # максимальное время сборки в минутах
+    steps:
+      - name: Checkout
+        actions:
+          - checkout
+
+      - name: Install dependencies
+        actions:
+          - run:
+              name: Install CocoaPods
+              command: pod install
+              
+      - name: Build app
+        actions:
+          - xcodebuild:
+              scheme: HelloWorldApp
+              configuration: Debug
+              destination: 'generic/platform=iOS'
+              workspace: HelloWorldApp.xcworkspace
+
+      - name: Export IPA
+        actions:
+          - xcodebuild:
+              scheme: HelloWorldApp
+              configuration: Debug
+              export_method: app-store
+              workspace: HelloWorldApp.xcworkspace
+              export_options:
+                provisioningProfiles:
+                  com.example.helloworld: "iOS Distribution"
