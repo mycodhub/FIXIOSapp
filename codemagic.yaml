@@ -3,22 +3,13 @@ version: 2.0
 workflows:
   ios:
     name: iOS Workflow
-    max_build_duration: 60 # максимальное время сборки в минутах
+    max_build_duration: 60
     steps:
       - checkout
       - run:
-          name: Install CocoaPods
-          command: |
-            if [ -f Podfile ]; then
-              pod install
-            fi
-      - run:
-          name: Build app
+          name: Build and Export IPA
           command: |
             xcodebuild -workspace HelloWorldApp.xcworkspace -scheme HelloWorldApp -sdk iphoneos -configuration Release archive -archivePath $PWD/build/HelloWorldApp.xcarchive
-      - run:
-          name: Export IPA
-          command: |
             xcodebuild -exportArchive -archivePath $PWD/build/HelloWorldApp.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build
     artifacts:
       - build/*.ipa
