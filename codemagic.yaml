@@ -11,6 +11,6 @@ workflows:
           brew install swiftlint
       - name: Build and test
         script: |
-          xcodebuild -project YourApp.xcodeproj -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11' build test
+          xcodebuild -project YourApp.xcodeproj -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' build test
     artifacts:
       - build/*.ipa
