@@ -1,18 +1,12 @@
-version: 2.0
-
 workflows:
   ios:
-    name: iOS Workflow
+    name: iOS Build
     max_build_duration: 60
-    steps:
-      - checkout
-      - run:
-          name: Build app
-          command: |
-            xcodebuild -workspace HelloWorldApp.xcworkspace -scheme HelloWorldApp -sdk iphoneos -configuration Release archive -archivePath $PWD/build/HelloWorldApp.xcarchive
-      - run:
-          name: Export IPA
-          command: |
-            xcodebuild -exportArchive -archivePath $PWD/build/HelloWorldApp.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build
-    artifacts:
-      - build/*.ipa
+    instance_type: mac_mini
+    scripts:
+      - name: Install dependencies
+        script: |
+          brew install swiftlint
+      - name: Build and test
+        script: |
+          xcodebuild -workspace YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11' build test
